@@ -1,0 +1,32 @@
+{
+    "name": "pull-request-reminder-action",
+    "version": "1.0.10",
+    "description": "Send slack messages to remind reviewing pull requests.",
+    "main": "index.js",
+    "scripts": {
+        "build": "ncc build index.js",
+        "test": "jest",
+        "coverage": "jest --coverage",
+        "lint": "eslint ./"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/spotlight21c/pull-request-reminder-action.git"
+    },
+    "author": "kyoungmin kim",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/spotlight21c/pull-request-reminder-action/issues"
+    },
+    "homepage": "https://github.com/spotlight21c/pull-request-reminder-action#readme",
+    "dependencies": {
+        "@actions/core": "^1.9.0",
+        "@slack/webhook": "^6.1.0",
+        "axios": "^0.27.2"
+    },
+    "devDependencies": {
+        "@vercel/ncc": "^0.34.0",
+        "eslint": "^8.18.0",
+        "jest": "^28.1.1"
+    }
+}
