@@ -1,6 +1,6 @@
 {
     "name": "pull-request-reminder-action",
-    "version": "1.0.10",
+    "version": "1.0.0",
     "description": "Send slack messages to remind reviewing pull requests.",
     "main": "index.js",
     "scripts": {

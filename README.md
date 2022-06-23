@@ -27,7 +27,7 @@ jobs:
   pull_request_reminder_action:
     runs-on: ubuntu-latest
     steps:
-      - uses: spotlight21c/pull-request-reminder-action@v1.0.10
+      - uses: spotlight21c/pull-request-reminder-action@v1.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
