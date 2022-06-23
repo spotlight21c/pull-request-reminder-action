@@ -2,6 +2,7 @@ const {
     getPullRequestsToReview,
     createPullRequestMapByUser,
     userMapStringToObject,
+    buildHeaderBlock,
     buildReviewerBlock,
     buildMessage,
 } = require('../functions');
@@ -92,6 +93,8 @@ const mockPullRequests = [
 
 const mockUserMapString = 'User1:AAAAA,User2:BBBBB,User3:CCCCC';
 
+const mockRepo = 'sample/sample-repo';
+
 test('get pull request to review', () => {
     expect(getPullRequestsToReview(mockPullRequests)).toHaveLength(4);
 });
@@ -119,6 +122,11 @@ test('pr map key is github username, and value is pr array', () => {
     expect(prMap.get('justice-league')).toHaveLength(2);
 });
 
+test('build header message block', () => {
+    const header = buildHeaderBlock(mockRepo);
+    expect(header.text.text).toEqual(expect.stringContaining(mockRepo));
+});
+
 test('build reviewer message block', () => {
     expect(buildReviewerBlock('<@AAAAA>', 3)).toEqual({
         accessory: {
@@ -136,7 +144,8 @@ test('build reviewer message block', () => {
 test('build entire message', () => {
     const message = buildMessage(
         createPullRequestMapByUser(getPullRequestsToReview(mockPullRequests)),
-        userMapStringToObject(mockUserMapString)
+        userMapStringToObject(mockUserMapString),
+        mockRepo
     );
 
     expect(message.blocks).toHaveLength(6);

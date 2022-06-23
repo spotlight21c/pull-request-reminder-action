@@ -55,7 +55,7 @@ function createPullRequestMapByUser(prs) {
 }
 
 /**
- *
+ * build reviewer message block
  * @param {string} reviewer
  * @param {number} prCount
  * @returns {object}
@@ -81,16 +81,25 @@ function buildReviewerBlock(reviewer, prCount) {
 }
 
 /**
- * build slack message
+ * build header message block
+ * @param {string} repoName
+ * @returns {object}
  */
-function buildMessage(prMap, githubSlackUserMap) {
-    const headerBlock = {
+function buildHeaderBlock(repoName) {
+    return {
         type: 'section',
         text: {
             type: 'mrkdwn',
-            text: `*리뷰부탁드립니다* :man-bowing: <${REVIEW_REQUESTED_URL}|리뷰하러가기>`,
+            text: `*${repoName} 리뷰부탁드립니다* :man-bowing: <${REVIEW_REQUESTED_URL}|리뷰하러가기>`,
         },
     };
+}
+
+/**
+ * build slack message
+ */
+function buildMessage(prMap, githubSlackUserMap, repoName) {
+    const headerBlock = buildHeaderBlock(repoName);
 
     const dividerBlock = {
         type: 'divider',
@@ -143,6 +152,7 @@ function userMapStringToObject(str) {
 module.exports = {
     getPullRequestsToReview,
     createPullRequestMapByUser,
+    buildHeaderBlock,
     buildReviewerBlock,
     buildMessage,
     userMapStringToObject,
@@ -11015,7 +11025,11 @@ async function main() {
         const webhookUrl = core.getInput('webhook-url');
         const webhook = new IncomingWebhook(webhookUrl);
 
-        const message = buildMessage(prByUserMap, githubSlackUserMap);
+        const message = buildMessage(
+            prByUserMap,
+            githubSlackUserMap,
+            GITHUB_REPOSITORY
+        );
         console.info(JSON.stringify(message));
 
         const sendResult = await webhook.send(message);

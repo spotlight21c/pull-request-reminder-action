@@ -47,7 +47,11 @@ async function main() {
         const webhookUrl = core.getInput('webhook-url');
         const webhook = new IncomingWebhook(webhookUrl);
 
-        const message = buildMessage(prByUserMap, githubSlackUserMap);
+        const message = buildMessage(
+            prByUserMap,
+            githubSlackUserMap,
+            GITHUB_REPOSITORY
+        );
         console.info(JSON.stringify(message));
 
         const sendResult = await webhook.send(message);
